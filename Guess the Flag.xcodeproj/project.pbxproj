@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		20F168932EAC4C54008F99AF /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 20F168912EAC4C49008F99AF /* readme.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		20D2EB652EA77CE000573D46 /* Guess the Flag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Guess the Flag.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		20F168912EAC4C49008F99AF /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -34,6 +39,7 @@
 			children = (
 				20D2EB672EA77CE000573D46 /* Guess the Flag */,
 				20D2EB662EA77CE000573D46 /* Products */,
+				20F168912EAC4C49008F99AF /* readme.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,6 +115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20F168932EAC4C54008F99AF /* readme.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
