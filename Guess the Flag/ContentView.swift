@@ -13,10 +13,13 @@ struct ContentView: View {
     
     @State private var showingScore = false
     @State private var scoreTitle = ""
+    @State private var scoreValue = 0
+    @State private var questionCount = 0
+    @State private var gameOver = false
     
     var body: some View {
         ZStack {
-            // 🎨 Updated background: radial gradient with custom color stops
+            // 🎨 Background gradient
             RadialGradient(
                 stops: [
                     .init(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
@@ -31,24 +34,20 @@ struct ContentView: View {
             VStack {
                 Spacer()
                 
-                // 🏷️ Title
                 Text("Guess the Flag")
                     .font(.largeTitle.bold())
                     .foregroundStyle(.white)
                 
-                // 📦 Main game area
                 VStack(spacing: 15) {
                     VStack {
                         Text("Tap the flag of")
                             .foregroundStyle(.secondary)
                             .font(.subheadline.weight(.heavy))
                         
-                        // Country name now uses primary color (not forced white)
                         Text(countries[correctAnswer])
                             .font(.largeTitle.weight(.semibold))
                     }
                     
-                    // 🏁 Flag buttons
                     ForEach(0..<3) { number in
                         Button {
                             flagTapped(number)
@@ -64,12 +63,11 @@ struct ContentView: View {
                 .background(.regularMaterial)
                 .clipShape(.rect(cornerRadius: 20))
                 
-                // Add space between game area and score
                 Spacer()
                 Spacer()
                 
-                // 🧮 Score label placeholder
-                Text("Score: ???")
+                // 🧮 Live score label
+                Text("Score: \(scoreValue)")
                     .foregroundStyle(.white)
                     .font(.title.bold())
                 
@@ -77,24 +75,47 @@ struct ContentView: View {
             }
             .padding()
         }
+        // 🧾 Alert for normal scoring
         .alert(scoreTitle, isPresented: $showingScore) {
             Button("Continue", action: askQuestion)
         } message: {
-            Text("Your score is ???")
+            Text("Your score is \(scoreValue)")
+        }
+        // 🏁 Final alert after 8 questions
+        .alert("Game Over", isPresented: $gameOver) {
+            Button("Restart", action: resetGame)
+        } message: {
+            Text("Your final score was \(scoreValue) out of 8.")
         }
     }
     
     // MARK: - Game Logic
+    
     func flagTapped(_ number: Int) {
         if number == correctAnswer {
-            scoreTitle = "Correct"
+            scoreTitle = "Correct!"
+            scoreValue += 1
         } else {
-            scoreTitle = "Wrong"
+            scoreTitle = "Wrong! That’s the flag of \(countries[number])"
         }
-        showingScore = true
+        
+        questionCount += 1
+        
+        if questionCount == 8 {
+            gameOver = true
+        } else {
+            showingScore = true
+        }
     }
     
     func askQuestion() {
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
+    }
+    
+    func resetGame() {
+        scoreValue = 0
+        questionCount = 0
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
     }
@@ -103,4 +124,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
 
