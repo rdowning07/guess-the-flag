@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		20F168932EAC4C54008F99AF /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 20F168912EAC4C49008F99AF /* readme.md */; };
+		20FF52A22EAE198C00FA9F30 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 20FF52A12EAE197E00FA9F30 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		20D2EB652EA77CE000573D46 /* Guess the Flag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Guess the Flag.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20F168912EAC4C49008F99AF /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
+		20FF52A12EAE197E00FA9F30 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -37,6 +39,7 @@
 		20D2EB5C2EA77CE000573D46 = {
 			isa = PBXGroup;
 			children = (
+				20FF52A12EAE197E00FA9F30 /* .gitignore */,
 				20D2EB672EA77CE000573D46 /* Guess the Flag */,
 				20D2EB662EA77CE000573D46 /* Products */,
 				20F168912EAC4C49008F99AF /* readme.md */,
@@ -115,6 +118,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20FF52A22EAE198C00FA9F30 /* .gitignore in Resources */,
 				20F168932EAC4C54008F99AF /* readme.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

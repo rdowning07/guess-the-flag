@@ -21,9 +21,12 @@ struct ContentView: View {
     @State private var questionCount = 0
     @State private var gameOver = false
     
+    // Animation state
+    @State private var selectedFlag: Int? = nil
+    @State private var animationAmount = [0.0, 0.0, 0.0]
+    
     var body: some View {
         ZStack {
-            // 🎨 Background gradient
             RadialGradient(
                 stops: [
                     .init(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
@@ -52,12 +55,22 @@ struct ContentView: View {
                             .font(.largeTitle.weight(.semibold))
                     }
                     
-                    // 🏴‍☠️ Flag buttons
                     ForEach(0..<3) { number in
                         Button {
-                            flagTapped(number)
+                            withAnimation(.easeInOut(duration: 0.6)) {
+                                flagTapped(number)
+                                animationAmount[number] += 360
+                                selectedFlag = number
+                            }
                         } label: {
                             FlagImage(country: countries[number])
+                                .rotation3DEffect(
+                                    .degrees(animationAmount[number]),
+                                    axis: (x: 0, y: 1, z: 0)
+                                )
+                                .opacity(selectedFlag == nil || selectedFlag == number ? 1.0 : 0.25)
+                                .scaleEffect(selectedFlag == nil || selectedFlag == number ? 1.0 : 0.8)
+                                .animation(.easeInOut(duration: 0.6), value: animationAmount[number])
                         }
                     }
                 }
@@ -69,7 +82,6 @@ struct ContentView: View {
                 Spacer()
                 Spacer()
                 
-                // 🧮 Live score label
                 Text("Score: \(scoreValue)")
                     .foregroundStyle(.white)
                     .font(.title.bold())
@@ -78,21 +90,17 @@ struct ContentView: View {
             }
             .padding()
         }
-        // 🧾 Alert for normal scoring
         .alert(scoreTitle, isPresented: $showingScore) {
             Button("Continue", action: askQuestion)
         } message: {
             Text("Your score is \(scoreValue)")
         }
-        // 🏁 Final alert after 8 questions
         .alert("Game Over", isPresented: $gameOver) {
             Button("Restart", action: resetGame)
         } message: {
             Text("Your final score was \(scoreValue) out of 8.")
         }
     }
-    
-    // MARK: - Game Logic
     
     func flagTapped(_ number: Int) {
         if number == correctAnswer {
@@ -112,6 +120,8 @@ struct ContentView: View {
     }
     
     func askQuestion() {
+        selectedFlag = nil
+        animationAmount = [0.0, 0.0, 0.0]
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
     }
@@ -119,6 +129,8 @@ struct ContentView: View {
     func resetGame() {
         scoreValue = 0
         questionCount = 0
+        selectedFlag = nil
+        animationAmount = [0.0, 0.0, 0.0]
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
     }
@@ -127,3 +139,4 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
